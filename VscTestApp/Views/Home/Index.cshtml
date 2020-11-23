@@ -1,0 +1,45 @@
+﻿@model List<TestModel>
+
+@{
+    ViewData["Title"] = "Title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid">
+    @foreach (var item in Model)
+    {
+        var randomizer = new Random();
+        int rInt = randomizer.Next(20, 45);
+
+        <div class="grid-item" data-item-name="@item.Slug">
+            @if (item.AddedToFavorites)
+            {
+                <button class="btn pull-right" data-item-guid="@item.ItemGuid" onclick="removeFromFavorites(this)">
+                    <i class="fas fa-heart"></i>
+                </button>
+            }
+            else
+            {
+                <button class="btn pull-right" data-item-guid="@item.ItemGuid" onclick="addToFavorites(this)">
+                    <i class="far fa-heart"></i>
+                </button>
+            }
+            <div class="grid-item-content" onclick="openItemDetails('@item.Slug')">
+                <img class="photo-item__image" style="width: 100%; height: 10" src=@(item.Picture.ImageUrl)
+                    alt="Card image cap">
+                    <h4 class="card-title">@item.Title</h4>
+                <p class="card-text">@item.RentalPricePerDay.ToString("0.##") per day</p>
+                    @if (item.BuyingPrice > 0)
+                {
+                    <p class="card-text" style="background: #ef7881">@item.BuyingPrice.ToString("0.##") $</p>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+
+    </script>
+}
